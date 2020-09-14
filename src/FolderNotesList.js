@@ -1,29 +1,26 @@
 import React from 'react'
+import Note from './Note'
 
 function FolderNotesList(props) {
-  const notes = props.notes.map((note, ind) => {
-    let noteName = note.name;
-    let noteDate = note.modified;
+  console.log(props, 'folderId')
+    const notesList = props.notes.filter(note => {
+      if (note.folderId === props.match.params.folderId) {
+        return note
+      }
+    })
+    
+  return <div>{notesList.map(note => {
     let noteId = note.id;
-   
-    return <div key={ind}>
-      <h2>{noteName}</h2>
-      <p>{noteDate}</p>
-    </div>
-  })
-
-  return (
-    <div>
-Notes from folder    </div>
-  )
+    let noteName = note.name;
+    let noteDate = note.modified
+      return (
+        <Note
+          noteId={noteId}
+          name={noteName}
+          date={noteDate}
+        />
+      )
+  })}</div>
 }
-/*  const notes = props.notes.find((note, ind) => {
-    note.id === props.match.params.folderId
-   
-    return <div key={ind}>
-      <h2>{note}</h2>
-    </div>
-  })
-  */
 
 export default FolderNotesList

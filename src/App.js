@@ -27,13 +27,7 @@ class App extends React.Component {
             render={() => <NotesList notes={STORE.notes} />}
           />
           <Route
-            component={(props) => {
-              console.log(props.match.params)
-              return <div />
-            }}
-          />
-          <Route
-            path='/folder/:folderId'
+            path='/folder/:folderId' // use : here in path only
             render={(props) =>
               <FolderNotesList
                 notes={STORE.notes}
@@ -41,8 +35,12 @@ class App extends React.Component {
                 match={props.match} />}
           />
           <Route
-            path='/note/:notesId'
-            component={MinutesPage}
+            path='/note/:notesId'  
+            render={(props) => 
+              <MinutesPage 
+                notes={STORE.notes}
+                match={props.match}
+              />}
           />
         </main>
       </div>

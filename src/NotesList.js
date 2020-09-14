@@ -1,21 +1,25 @@
 import React from 'react'
+import Note from './Note'
 
 function NotesList(props) {
   const notes = props.notes.map((note) => {
     let noteName = note.name;
     let noteDate = note.modified;
     let noteId = note.id;
-    return <li key={noteId}>
-      <h2>{noteName}</h2>
-      <p>{noteDate}</p>
-      <button>Add Note</button>
-    </li>
+    return (<Note
+      noteId={noteId}
+      name={noteName}
+      date={noteDate}
+    />)
   })
 
   return (
-    <ul>
-      {notes}
-    </ul>
+    <div>
+      <ul>
+        {notes}
+      </ul>
+      <button>Add Note</button>
+    </div>
   )
 }
 
