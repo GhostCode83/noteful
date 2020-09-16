@@ -37,7 +37,6 @@ function Note(props){
       </Link>
       </li>
 
-
       )}
     </NotefulContext.Consumer>
     
