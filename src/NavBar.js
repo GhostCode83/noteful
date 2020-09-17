@@ -6,8 +6,6 @@ function NavBar(props) {
     let folderName = folder.name;
     let folderId = folder.id;
 
-    //link should not have colon, only in the route component
-
     return (
       <NavLink key={ind} to={`/folder/${folderId}`}>
         <h3 >{folderName}</h3>

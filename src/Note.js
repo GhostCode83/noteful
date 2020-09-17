@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import config from './config';
 import NotefulContext from './NotefulContext';
 
-function deleteNote(noteId, callback){
-  fetch(config.API_NOTES)
+function handleDeleteNote(noteId, callback){
+  console.log(noteId)
+  fetch(`${config.API_ENDPOINT}notes/${noteId}`, {
+    method: 'DELETE',
+  })
     .then(res => {
       if (!res.ok) {
         return res.json().then(error => {
@@ -22,9 +25,8 @@ function deleteNote(noteId, callback){
     })
 }
 
-
 function Note(props){
-
+  console.log(props.noteId)
   return(
     <NotefulContext.Consumer>
       {(context) => (
@@ -33,13 +35,19 @@ function Note(props){
       <Link to={`/note/${props.noteId}`}>
         <h2>{props.name}</h2>
         <p>{props.date}</p>
-        <button onClick={() => deleteNote}>Delete Note</button>
-      </Link>
+        </Link>
+        <button onClick={() => 
+          handleDeleteNote(
+            props.noteId, 
+            context.deleteNote
+          )
+        }>
+           Delete Note
+        </button>
       </li>
 
       )}
     </NotefulContext.Consumer>
-    
   )
 }
 

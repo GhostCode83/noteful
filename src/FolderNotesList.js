@@ -3,12 +3,15 @@ import Note from './Note'
 import NotefulContext from './NotefulContext'
 
 class FolderNotesList extends React.Component {
+  constructor(props){
+    super(props)
+  }
   static contextType = NotefulContext;
 
   render(){
     console.log(this.context, 'folderId')
       const notesList = this.context.notes.filter(note => {
-        if (note.folderId === this.context.match.params.folderId) {
+        if (note.folderId === this.props.match.params.folderId) {
           return note
         }
       })
