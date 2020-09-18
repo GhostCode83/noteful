@@ -21,8 +21,9 @@ class AddFolder extends  React.Component{
     event.preventDefault();
     const { folder } = this.state;
     console.log("Folder Title: ", folder.value)
-    fetch(`${config.API_ENDPOINT}${folder.value}`, {
-      method: 'POST'
+    fetch(`http://localhost:9090/folders/`, {
+      method: 'POST',
+      body: JSON.stringify({folder: folder.value}),
     })
       .then(res => {
         if(!res.ok) {
@@ -34,6 +35,7 @@ class AddFolder extends  React.Component{
       })
       .then(data => {
         console.log(data);
+        
       })//not doing anything with the data yet
       .catch(error => {
         console.error(error)

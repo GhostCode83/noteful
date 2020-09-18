@@ -10,7 +10,6 @@ import { withRouter } from 'react-router-dom'
 import AddFolder from './AddFolder';
 
 class App extends React.Component {
-
   state = {
     notes: [],
     folders: []
@@ -53,7 +52,6 @@ class App extends React.Component {
           notes: data1,
           folders: data2
         })
-        console.log(data1, data2);
       })
       .catch(error => {
         console.error(error)
@@ -61,13 +59,12 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.context)
     const contextValue = {
       notes: this.state.notes,
       folders: this.state.folders,
       deleteNote: this.deleteNote
     }
-    console.log(this.state.folders)
+
     return (
       <NotefulContext.Provider value={contextValue}>
         <div className="App">

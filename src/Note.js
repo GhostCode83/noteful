@@ -26,7 +26,6 @@ function handleDeleteNote(noteId, callback){
 }
 
 function Note(props){
-  console.log(props.noteId)
   return(
     <NotefulContext.Consumer>
       {(context) => (

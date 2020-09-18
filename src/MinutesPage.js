@@ -36,7 +36,6 @@ class MinutesPage extends React.Component {
   }
 
   render() {
-    console.log(this.props.match, this.context, 'yellow')
     const oneNote = (this.props.match ) ? this.context.notes.find(note => {
       if (note.id === this.props.match.params.notesId) {
         return (note)
