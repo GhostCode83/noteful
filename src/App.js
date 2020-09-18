@@ -7,6 +7,7 @@ import NavBar from './NavBar'
 import NotefulContext from './NotefulContext';
 import config from './config'
 import { withRouter } from 'react-router-dom'
+import AddFolder from './AddFolder';
 
 class App extends React.Component {
 
@@ -102,7 +103,10 @@ class App extends React.Component {
                   notes={this.state.notes}
                 />
               )}
-        
+            />
+            <Route
+              path='/AddFolder'
+              component={AddFolder}
             />
           </main>
         </div>

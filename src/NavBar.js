@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, withRouter } from 'react-router-dom'
+import { NavLink, withRouter, Link } from 'react-router-dom'
 
 function NavBar(props) {
   const contents = props.folders.map((folder, ind) => {
@@ -16,7 +16,9 @@ function NavBar(props) {
   return (
     <div>
       {contents}
-      <button>Add Folder</button>
+      <Link to={`/AddFolder`}>
+        <button >Add Folder</button>
+      </Link>
       <button onClick={() => props.history.push('/')}>Go Back</button>
     </div>
   )
