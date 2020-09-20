@@ -3,9 +3,7 @@ import Note from './Note'
 import NotefulContext from './NotefulContext'
 
 class FolderNotesList extends React.Component {
-  constructor(props){
-    super(props)
-  }
+
   static contextType = NotefulContext;
 
   render(){

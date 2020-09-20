@@ -3,8 +3,6 @@ import NotefulContext from './NotefulContext'
 import config from './config'
 import {withRouter} from 'react-router-dom'
 
-
-
 class MinutesPage extends React.Component {
   constructor(props) {
     super(props)

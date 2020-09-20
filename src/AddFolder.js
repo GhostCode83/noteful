@@ -22,7 +22,7 @@ class AddFolder extends  React.Component{
     event.preventDefault();
     const { folder } = this.state;
     console.log("Folder Title: ", folder.value)
-    fetch(`http://localhost:9090/folders/`, {
+    fetch(`${config.API_ENDPOINT}folders/`, {
       method: 'POST',
       headers: {'content-type': 'application/json'},
       body: JSON.stringify({name: folder.value}),
@@ -57,9 +57,39 @@ class AddFolder extends  React.Component{
   }
 
   render() {
-    console.log(this.props)
+    console.log(this.props, )
     return(
       <NotefulContext.Consumer>
+      {(context) => (
+        <form onSubmit={event => 
+          this.handleSubmit(
+            event,
+            context)}>
+        <h2> Add Folder</h2>
+        <label htmlFor='folder'>
+          Folder Title:
+        </label>
+        <input id='folder' type='text' onChange={e => this.updateFolder(e.target.value)} /> 
+        {this.state.folder.touch && (<ValidationError message={this.validateFolder()}/>)}
+        
+        <button 
+        type='submit'
+        className='folder__button'
+        disabled={
+          this.validateFolder()
+        }
+        >Submit Folder</button>
+        <button type='reset'>Cancel</button>
+        </form>
+        
+      )}
+        </NotefulContext.Consumer>
+       
+    )
+  }
+}
+
+/*   <NotefulContext.Consumer>
       {(context) => {
         <form onSubmit={event => 
           this.handleSubmit(
@@ -83,11 +113,8 @@ class AddFolder extends  React.Component{
         console.log(context)
       }}
         </NotefulContext.Consumer>
-    )
-  }
-}
 
-/*
+
         {this.state.folder.touched && (<ValidationError message={this.validateFolder()}/>)}
 */
 export default AddFolder
