@@ -13,19 +13,28 @@ class App extends React.Component {
   state = {
     notes: [],
     folders: []
+    
   }
-
   static contextType = NotefulContext;
-
+  
   deleteNote = noteId => {
     const newNotes = this.state.notes.filter(n =>
       n.id !== noteId
-    )
-    this.setState({
-      notes: newNotes
-    })
-  }
-
+      )
+      this.setState({
+        notes: newNotes
+      })
+    }
+    
+    addFolder = () => {
+      const newFolders = this.state.folders.map(folder =>
+        folder
+        )
+        this.setState({
+          folders: newFolders
+        })
+      }
+      
   componentDidMount() {
     Promise.all([
       fetch(`${config.API_ENDPOINT}notes/`),
@@ -65,6 +74,7 @@ class App extends React.Component {
       deleteNote: this.deleteNote
     }
 
+
     return (
       <NotefulContext.Provider value={contextValue}>
         <div className="App">
@@ -103,10 +113,17 @@ class App extends React.Component {
             />
             <Route
               path='/AddFolder'
-              component={AddFolder}
+              component={(props) => 
+                <AddFolder 
+                  {...props}
+                  folders={this.state.folders}
+                
+                />
+              }
             />
           </main>
         </div>
+        
       </NotefulContext.Provider>
     );
   }

@@ -19,10 +19,10 @@ class AddNote extends React.Component{
   render(){
     return(
       <form>
-        <label>
+        <label htmlFor='name'>
           Name: 
         </label>
-        <input />
+        <input id='name' />
       </form>
     )
   }

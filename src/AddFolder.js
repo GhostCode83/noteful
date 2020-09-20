@@ -1,6 +1,7 @@
 import  React from  'react';
 import ValidationError from './ValidationError';
 import config from './config'
+import NotefulContext from './NotefulContext';
 
 class AddFolder extends  React.Component{
   constructor(props){
@@ -17,13 +18,14 @@ class AddFolder extends  React.Component{
     this.setState({folder: {value: folder, touch: true}})
   }
 
-  handleSubmit(event){
+  handleSubmit(event, callback){
     event.preventDefault();
     const { folder } = this.state;
     console.log("Folder Title: ", folder.value)
     fetch(`http://localhost:9090/folders/`, {
       method: 'POST',
-      body: JSON.stringify({folder: folder.value}),
+      headers: {'content-type': 'application/json'},
+      body: JSON.stringify({name: folder.value}),
     })
       .then(res => {
         if(!res.ok) {
@@ -35,15 +37,16 @@ class AddFolder extends  React.Component{
       })
       .then(data => {
         console.log(data);
-        
+        callback()
       })//not doing anything with the data yet
       .catch(error => {
         console.error(error)
       })
   }
 
+  homePage(){
 
-
+  }
   validateFolder(){
     const folder = this.state.folder.value.trim();
     if (folder.length === 0) {
@@ -54,8 +57,13 @@ class AddFolder extends  React.Component{
   }
 
   render() {
+    console.log(this.props)
     return(
-      <form onSubmit={e => this.handleSubmit(e)}>
+      <NotefulContext.Consumer>
+      {(context) => {
+        <form onSubmit={event => 
+          this.handleSubmit(
+            event)}>
         <h2> Add Folder</h2>
         <label htmlFor='folder'>
           Folder Title:
@@ -64,14 +72,17 @@ class AddFolder extends  React.Component{
         {this.state.folder.touch && (<ValidationError message={this.validateFolder()}/>)}
         
         <button 
-          type='submit'
-          className='folder__button'
-          disabled={
-            this.validateFolder()
-          }
-          >Submit Folder</button>
+        type='submit'
+        className='folder__button'
+        disabled={
+          this.validateFolder()
+        }
+        >Submit Folder</button>
         <button type='reset'>Cancel</button>
-      </form>
+        </form>
+        console.log(context)
+      }}
+        </NotefulContext.Consumer>
     )
   }
 }
