@@ -3,6 +3,7 @@ import NotefulContext from './NotefulContext'
 import config from './config'
 import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import NotesList from './NotesList';
 
 class NotesPage extends React.Component {
 
@@ -62,11 +63,14 @@ class NotesPage extends React.Component {
   }
 }
 
+NotesList.defaultProps ={
+  
+}
 NotesPage.propTypes ={
-  history: PropTypes.objectOf(PropTypes.shape({
+  history: PropTypes.shape({
     push: PropTypes.func,
     length: PropTypes.number
-  })),
+  }),
   location: PropTypes.object,
   notes: PropTypes.arrayOf(PropTypes.shape({
     content: PropTypes.string,
@@ -75,7 +79,6 @@ NotesPage.propTypes ={
     modified: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
   }))
-
 }
 
 export default withRouter(NotesPage)

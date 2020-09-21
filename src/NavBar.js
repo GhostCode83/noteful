@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, withRouter, Link } from 'react-router-dom';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import './NavBar.css'
 
 function NavBar(props) {
   const contents = props.folders.map((folder, ind) => {
@@ -15,7 +16,7 @@ function NavBar(props) {
   })
 
   return (
-    <div>
+    <div className='left-menu'>
       {contents}
       <Link to={`/AddFolder`}>
         <button >Add Folder</button>

@@ -2,6 +2,7 @@ import React from 'react'
 import Note from './Note'
 import NotefulContext from './NotefulContext'
 import { Link } from 'react-router-dom';
+import './Notes.css';
 
 class NotesList extends React.Component {
   static contextType = NotefulContext;
@@ -21,7 +22,7 @@ class NotesList extends React.Component {
 
     return (
 
-      <div>
+      <div className='right-column'>
         <ul>
           {notes}
         </ul>

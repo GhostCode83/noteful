@@ -69,7 +69,6 @@ class AddFolder extends  React.Component{
         </label>
         <input id='folder' type='text' onChange={e => this.updateFolder(e.target.value)} /> 
         {this.state.folder.touch && (<ValidationError message={this.validateFolder()}/>)}
-        
         <button 
         type='submit'
         className='folder__button'
@@ -79,10 +78,8 @@ class AddFolder extends  React.Component{
         >Submit Folder</button>
         <button type='reset'>Cancel</button>
         </form>
-        
       )}
         </NotefulContext.Consumer>
-       
     )
   }
 }

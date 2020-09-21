@@ -10,6 +10,7 @@ import { withRouter } from 'react-router-dom'
 import AddFolder from './AddFolder';
 import AddNote from './AddNote';
 import NotefulError from './NotefulError';
+import './App.css'
 
 class App extends React.Component {
   state = {
@@ -70,7 +71,6 @@ class App extends React.Component {
       addNote: this.addNote
     }
 
-
     return (
       <NotefulContext.Provider value={contextValue}>
         <div className="App">
@@ -80,10 +80,9 @@ class App extends React.Component {
                 folders={this.state.folders}
               />
             </NotefulError>
-          
           </nav>
           <header>
-            <h1><Link to='/'>Noteful</Link></h1>
+            <h1 className='heading'><Link to='/'>Noteful</Link></h1>
           </header>
           <main>
             <NotefulError>
@@ -100,7 +99,8 @@ class App extends React.Component {
                   <FolderNotesList
                     notes={this.state.notes}
                     {...props}
-                  />}
+                  />
+                }
               />
             </NotefulError>
             <NotefulError>
@@ -111,8 +111,8 @@ class App extends React.Component {
                 match={match}
                 notes={this.state.notes}
                 />
-                )}
-                />
+              )}
+            />
             </NotefulError>
             <NotefulError>
               <Route
@@ -121,8 +121,7 @@ class App extends React.Component {
                   <AddFolder 
                   {...props}
                   folders={this.state.folders}
-                  />
-                }
+                  />}
                 />
             </NotefulError>
             <NotefulError>

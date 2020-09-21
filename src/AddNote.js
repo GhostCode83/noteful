@@ -72,6 +72,7 @@ class AddNote extends React.Component {
 
 
   render() {
+    console.log(this.props, "AddNote  Component")
     return (
       <NotefulContext.Consumer>
         {(context) => (
@@ -115,7 +116,11 @@ class AddNote extends React.Component {
   }
 }
 
-AddNote.propTypes ={
+AddNote.defaultProps= {
+  name: ''
+}
+
+AddNote.propTypes = {
   name: PropTypes.string.isRequired
 }
 
