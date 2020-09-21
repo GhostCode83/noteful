@@ -1,14 +1,15 @@
 import React from 'react'
 import Note from './Note'
-import NotefulContext from './NotefulContext'
+import NotefulContext from './NotefulContext';
+import PropTypes from 'prop-types';
 
 class FolderNotesList extends React.Component {
 
   static contextType = NotefulContext;
 
   render(){
-    console.log(this.context, 'folderId')
-      const notesList = this.context.notes.filter(note => {
+    console.log(this.props)
+      const notesList = this.props.notes.filter(note => {
         if (note.folderId === this.props.match.params.folderId) {
           return note
         }
@@ -20,6 +21,7 @@ class FolderNotesList extends React.Component {
       let noteDate = note.modified
         return (
           <Note
+            key={noteId}
             noteId={noteId}
             name={noteName}
             date={noteDate}
@@ -27,6 +29,12 @@ class FolderNotesList extends React.Component {
         )
     })}</div>
   }
+}
+
+FolderNotesList.propTypes = {
+  history: PropTypes.object,
+  location: PropTypes.object,
+  match: PropTypes.object,
 }
 
 export default FolderNotesList

@@ -1,5 +1,6 @@
 import React from 'react';
-import { NavLink, withRouter, Link } from 'react-router-dom'
+import { NavLink, withRouter, Link } from 'react-router-dom';
+import PropTypes from 'prop-types'
 
 function NavBar(props) {
   const contents = props.folders.map((folder, ind) => {
@@ -24,7 +25,8 @@ function NavBar(props) {
   )
 }
 
-/*
-*/
 
+NavBar.propTypes = {
+  folders: PropTypes.arrayOf(PropTypes.object)
+}
 export default withRouter(NavBar)

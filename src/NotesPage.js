@@ -1,39 +1,37 @@
 import React from 'react';
 import NotefulContext from './NotefulContext'
 import config from './config'
-import {withRouter} from 'react-router-dom'
+import {withRouter} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-class MinutesPage extends React.Component {
-  constructor(props) {
-    super(props)
-  }
+class NotesPage extends React.Component {
 
-  static contextType = NotefulContext;
   
+  static contextType = NotefulContext;
+
   handleDeleteNote(note, callback){
-    console.log(note, 'hello')
     fetch(`${config.API_ENDPOINT}notes/${note.id}`, {
       method: 'DELETE',
     })
-      .then(res => {
-        if (!res.ok) {
-          return res.json().then(error => {
-            throw error
-          })
-        }
-        return res.json()
-      })
-      .then(data => {
-        console.log(data);
-        this.props.history.push('/')
-        callback(note.id)
-      })
-      .catch(error => {
-        console.error(error)
-      })
+    .then(res => {
+      if (!res.ok) {
+        return res.json().then(error => {
+          throw error
+        })
+      }
+      return res.json()
+    })
+    .then(() => {
+      this.props.history.push('/')
+      callback(note.id)
+    })
+    .catch(error => {
+      console.error(error)
+    })
   }
-
+  
   render() {
+    console.log(this.props)
     const oneNote = (this.props.match ) ? this.context.notes.find(note => {
       if (note.id === this.props.match.params.notesId) {
         return (note)
@@ -63,6 +61,21 @@ class MinutesPage extends React.Component {
     )
   }
 }
-/* 
- */
-export default withRouter(MinutesPage)
+
+NotesPage.propTypes ={
+  history: PropTypes.objectOf(PropTypes.shape({
+    push: PropTypes.func,
+    length: PropTypes.number
+  })),
+  location: PropTypes.object,
+  notes: PropTypes.arrayOf(PropTypes.shape({
+    content: PropTypes.string,
+    folderId: PropTypes.string.isRequired,
+    id: PropTypes.string,
+    modified: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+  }))
+
+}
+
+export default withRouter(NotesPage)

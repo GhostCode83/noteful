@@ -1,6 +1,7 @@
 import React from 'react'
 import Note from './Note'
 import NotefulContext from './NotefulContext'
+import { Link } from 'react-router-dom';
 
 class NotesList extends React.Component {
   static contextType = NotefulContext;
@@ -11,20 +12,45 @@ class NotesList extends React.Component {
       let noteDate = note.modified;
       let noteId = note.id;
       return (<Note
+        key={noteId}
         noteId={noteId}
         name={noteName}
         date={noteDate}
       />)
     })
+
     return (
+
       <div>
         <ul>
           {notes}
         </ul>
-        <button>Add Note</button>
+        <Link to={`/AddNote`}>
+        <button>
+          Add Note
+        </button>
+        </Link>
       </div>
+
     )
   }
 }
 
 export default NotesList
+
+/*
+    <NotefulContext.Consumer>
+        {(context) => (
+
+
+      <div>
+        <ul>
+          {notes}
+        </ul>
+        <Link to={`/AddNote`}>
+          <button>Add Note</button>
+        </Link>
+      </div>
+        )}
+      </NotefulContext.Consumer>
+*/

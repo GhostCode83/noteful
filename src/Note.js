@@ -4,7 +4,6 @@ import config from './config';
 import NotefulContext from './NotefulContext';
 
 function handleDeleteNote(noteId, callback) {
-  console.log(noteId)
   fetch(`${config.API_ENDPOINT}notes/${noteId}`, {
     method: 'DELETE',
   })
@@ -17,7 +16,6 @@ function handleDeleteNote(noteId, callback) {
       return res.json()
     })
     .then(data => {
-      console.log(data);
       callback(noteId)
     })
     .catch(error => {
