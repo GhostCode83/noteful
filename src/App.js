@@ -16,8 +16,8 @@ class App extends React.Component {
   state = {
     notes: [],
     folders: []
-    
   }
+  
   static contextType = NotefulContext;
   
   deleteNote = noteId => {

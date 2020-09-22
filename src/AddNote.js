@@ -16,7 +16,8 @@ class AddNote extends React.Component {
         value: ''
       },
       folder: {
-        value: ''
+        value: '',
+        touch: false
       },
       time:  {
         value: ''
@@ -33,7 +34,7 @@ class AddNote extends React.Component {
   }
 
   updateFolder(folder) {
-    this.setState({ folder: { value: folder } })
+    this.setState({ folder: { value: folder, touch: true} })
   }
 
   handleSubmit(event, callback) {
@@ -70,6 +71,13 @@ class AddNote extends React.Component {
     } 
   }
 
+  validateFolder() {
+    const folder = this.state.folder.value;
+    console.log(this.state.folder.value, 'folder value')
+    if (folder === '' || folder === 'select') {
+      return 'Please select a folder'
+    }
+  }
 
   render() {
     console.log(this.props, "AddNote  Component")
@@ -102,10 +110,12 @@ class AddNote extends React.Component {
                 </option>
               ))}
             </select>
+            {this.state.folder.touch && <ValidationError message={this.validateFolder()}/>}
             <button 
               type='submit'
               disabled={
-                this.validateName()
+                this.validateName() ||
+                this.validateFolder()
               }
               >Submit</button>
             <button type='reset'>Cancel</button>
@@ -117,11 +127,13 @@ class AddNote extends React.Component {
 }
 
 AddNote.defaultProps= {
-  name: ''
+  name: '',
+  folder: ''
 }
 
 AddNote.propTypes = {
-  name: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired,
+  folder: PropTypes.string.isRequired
 }
 
 export default AddNote
