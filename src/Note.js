@@ -13,7 +13,7 @@ function handleDeleteNote(noteId, callback) {
           throw error
         })
       }
-      return res.json()
+      return res
     })
     .then(data => {
       callback(noteId)

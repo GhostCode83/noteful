@@ -7,26 +7,26 @@ class FolderNotesList extends React.Component {
 
   static contextType = NotefulContext;
 
-  render(){
+  render() {
     console.log(this.props)
-      const notesList = this.props.notes.filter(note => {
-        if (note.folderId === this.props.match.params.folderId) {
-          return note
-        }
-      })
-      
+    const notesList = this.props.notes.filter(note => {
+      if (note.folderId === Number(this.props.match.params.folderId)) {
+        return note
+      }
+    })
+
     return <div>{notesList.map(note => {
       let noteId = note.id;
       let noteName = note.name;
       let noteDate = note.modified
-        return (
-          <Note
-            key={noteId}
-            noteId={noteId}
-            name={noteName}
-            date={noteDate}
-          />
-        )
+      return (
+        <Note
+          key={noteId}
+          noteId={noteId}
+          name={noteName}
+          date={noteDate}
+        />
+      )
     })}</div>
   }
 }

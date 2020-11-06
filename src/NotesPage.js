@@ -1,49 +1,50 @@
 import React from 'react';
 import NotefulContext from './NotefulContext'
 import config from './config'
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import NotesList from './NotesList';
 
 class NotesPage extends React.Component {
 
-  
+
   static contextType = NotefulContext;
 
-  handleDeleteNote(note, callback){
+  handleDeleteNote(note, callback) {
     fetch(`${config.API_ENDPOINT}notes/${note.id}`, {
       method: 'DELETE',
     })
-    .then(res => {
-      if (!res.ok) {
-        return res.json().then(error => {
-          throw error
-        })
-      }
-      return res.json()
-    })
-    .then(() => {
-      this.props.history.push('/')
-      callback(note.id)
-    })
-    .catch(error => {
-      console.error(error)
-    })
+      .then(res => {
+        if (!res.ok) {
+          return res.json().then(error => {
+            throw error
+          })
+        }
+        return res
+      })
+      .then(() => {
+        this.props.history.push('/')
+        callback(note.id)
+      })
+      .catch(error => {
+        console.error(error)
+      })
   }
-  
+
   render() {
     console.log(this.props)
-    const oneNote = (this.props.match ) ? this.context.notes.find(note => {
-      if (note.id === this.props.match.params.notesId) {
+    const oneNote = (this.props.match) ? this.context.notes.find(note => {
+      if (note.id === Number(this.props.match.params.notesId)) {
         return (note)
       }
     }) : ''
-//try rendering another compenent to remove the extra delete button
+    //try rendering another compenent to remove the extra delete button
+    console.log(oneNote, 'hello')
     return (
       <NotefulContext.Consumer>
         {(context) => (
           <article>
-            <div> 
+            <div>
               <h3>{oneNote.name}</h3>
               <p>{oneNote.modified}</p>
               <button onClick={() =>
@@ -63,10 +64,10 @@ class NotesPage extends React.Component {
   }
 }
 
-NotesList.defaultProps ={
-  
+NotesList.defaultProps = {
+
 }
-NotesPage.propTypes ={
+NotesPage.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
     length: PropTypes.number

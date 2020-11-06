@@ -17,33 +17,33 @@ class App extends React.Component {
     notes: [],
     folders: []
   }
-  
+
   static contextType = NotefulContext;
-  
+
   deleteNote = noteId => {
     const newNotes = this.state.notes.filter(n =>
       n.id !== noteId
-      )
-      this.setState({
-        notes: newNotes
-      })
-    }
-    
+    )
+    this.setState({
+      notes: newNotes
+    })
+  }
+
   addFolder = (newFolder) => {
     const newFolders = [...this.state.folders, newFolder]
-      this.setState({
-        folders: newFolders
-      })
-    }
-      
+    this.setState({
+      folders: newFolders
+    })
+  }
+
   addNote = (newNote) => {
     const newNotes = [...this.state.notes, newNote]
     this.setState({
       notes: newNotes,
-    
+
     })
   }
-  
+
   componentDidMount() {
     Promise.all([
       fetch(`${config.API_ENDPOINT}notes/`),
@@ -52,9 +52,26 @@ class App extends React.Component {
       .then(([res1, res2]) =>
         Promise.all([res1.json(), res2.json()]))
       .then(([data1, data2]) => {
+        console.log(data1, data2);
+        let folders = data2.map(item => {
+          return {
+            id: item.id,
+            name: item.title
+          };
+
+        })
+        let notes = data1.map(item => {
+          return {
+            id: item.id,
+            name: item.note_name,
+            modified: item.date_posted,
+            folderId: item.folder,
+            content: item.content
+          }
+        })
         this.setState({
-          notes: data1,
-          folders: data2
+          notes: notes,
+          folders: folders
         })
       })
       .catch(error => {
@@ -66,78 +83,81 @@ class App extends React.Component {
     const contextValue = {
       notes: this.state.notes,
       folders: this.state.folders,
-      deleteNote: this.deleteNote, 
+      deleteNote: this.deleteNote,
       addFolder: this.addFolder,
       addNote: this.addNote
     }
 
     return (
       <NotefulContext.Provider value={contextValue}>
-        <div className="App">
-          <nav>
-            <NotefulError>
-              <NavBar
-                folders={this.state.folders}
-              />
-            </NotefulError>
-          </nav>
+
+        <div>
           <header>
             <h1 className='heading'><Link to='/'>Noteful</Link></h1>
           </header>
-          <main>
-            <NotefulError>
-              <Route
-                exact
-                path='/'
-                component={NotesList}
-              />
-            </NotefulError>
-            <NotefulError>
-              <Route
-                path='/folder/:folderId' // use : here in path only
-                component={(props) =>
-                  <FolderNotesList
-                    notes={this.state.notes}
-                    {...props}
-                  />
-                }
-              />
-            </NotefulError>
-            <NotefulError>
-            <Route
-              path='/note/:notesId'
-              children={({match}) => (
-                <NotesPage
-                match={match}
-                notes={this.state.notes}
+          <div className="App">
+            <nav>
+              <NotefulError>
+                <NavBar
+                  folders={contextValue.folders}
                 />
-              )}
-            />
-            </NotefulError>
-            <NotefulError>
-              <Route
-                path='/AddFolder'
-                component={(props) => 
-                  <AddFolder 
-                  {...props}
-                  folders={this.state.folders}
-                  />}
+              </NotefulError>
+            </nav>
+            <main>
+              <NotefulError>
+                <Route
+                  exact
+                  path='/'
+                  component={NotesList}
                 />
-            </NotefulError>
-            <NotefulError>
-              <Route
-                path='/AddNote'
-                component={(props) =>
-                  <AddNote 
-                    {...props}
-                    folders={this.state.folders}
-                  />
-                }
-              />
-            </NotefulError>
-          </main>
+              </NotefulError>
+              <NotefulError>
+                <Route
+                  path='/folder/:folderId' // use : here in path only
+                  component={(props) =>
+                    <FolderNotesList
+                      notes={contextValue.notes}
+                      {...props}
+                    />
+                  }
+                />
+              </NotefulError>
+              <NotefulError>
+                <Route
+                  path='/note/:notesId'
+                  children={({ match }) => (
+                    <NotesPage
+                      match={match}
+                      notes={this.state.notes}
+                    />
+                  )}
+                />
+              </NotefulError>
+              <NotefulError>
+                <Route
+                  path='/AddFolder'
+                  component={(props) =>
+                    <AddFolder
+                      {...props}
+                      folders={this.state.folders}
+                    />}
+                />
+              </NotefulError>
+              <NotefulError>
+                <Route
+                  path='/AddNote'
+                  component={(props) =>
+                    <AddNote
+                      {...props}
+                      folders={this.state.folders}
+                    />
+                  }
+                />
+              </NotefulError>
+            </main>
+          </div>
         </div>
-        
+
       </NotefulContext.Provider>
     );
   }

@@ -10,7 +10,7 @@ function NavBar(props) {
 
     return (
       <NavLink key={ind} to={`/folder/${folderId}`}>
-        <h3 >{folderName}</h3>
+        <h2 >{folderName}</h2>
       </NavLink>
     )
   })
