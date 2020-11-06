@@ -1,11 +1,11 @@
-import  React from  'react';
+import React from 'react';
 import ValidationError from './ValidationError';
 import config from './config'
 import NotefulContext from './NotefulContext';
 import PropTypes from 'prop-types';
 
-class AddFolder extends  React.Component{
-  constructor(props){
+class AddFolder extends React.Component {
+  constructor(props) {
     super(props)
     this.state = {
       folder: {
@@ -15,21 +15,20 @@ class AddFolder extends  React.Component{
     }
   }
 
-  updateFolder(folder){
-    this.setState({folder: {value: folder, touch: true}})
+  updateFolder(folder) {
+    this.setState({ folder: { value: folder, touch: true } })
   }
 
-  handleSubmit(event, callback){
+  handleSubmit(event, callback) {
     event.preventDefault();
     const { folder } = this.state;
-    console.log("Folder Title: ", folder.value)
     fetch(`${config.API_ENDPOINT}folders/`, {
       method: 'POST',
-      headers: {'content-type': 'application/json'},
-      body: JSON.stringify({name: folder.value}),
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ name: folder.value }),
     })
       .then(res => {
-        if(!res.ok) {
+        if (!res.ok) {
           return res.json().then(error => {
             throw error
           })
@@ -45,7 +44,7 @@ class AddFolder extends  React.Component{
       })
   }
 
-  validateFolder(){
+  validateFolder() {
     const folder = this.state.folder.value.trim();
     if (folder.length === 0) {
       return 'Folder title is required';
@@ -55,36 +54,35 @@ class AddFolder extends  React.Component{
   }
 
   render() {
-    console.log(this.props, 'dinka')
-    return(
+    return (
       <NotefulContext.Consumer>
-      {(context) => console.log(context, '123') || ( 
-        <form onSubmit={event => 
-          this.handleSubmit(
-            event,
-            context.addFolder)}>
-        <h2> Add Folder</h2>
-        <label htmlFor='folder'>
-          Folder Title:
+        {(context) => console.log(context, '123') || (
+          <form onSubmit={event =>
+            this.handleSubmit(
+              event,
+              context.addFolder)}>
+            <h2> Add Folder</h2>
+            <label htmlFor='folder'>
+              Folder Title:
         </label>
-        <input id='folder' type='text' onChange={e => this.updateFolder(e.target.value)} /> 
-        {this.state.folder.touch && (<ValidationError message={this.validateFolder()}/>)}
-        <button 
-        type='submit'
-        className='folder__button'
-        disabled={
-          this.validateFolder()
-        }
-        >Submit Folder</button>
-        <button type='reset'>Cancel</button>
-        </form>
-      )}
-        </NotefulContext.Consumer>
+            <input id='folder' type='text' onChange={e => this.updateFolder(e.target.value)} />
+            {this.state.folder.touch && (<ValidationError message={this.validateFolder()} />)}
+            <button
+              type='submit'
+              className='folder__button'
+              disabled={
+                this.validateFolder()
+              }
+            >Submit Folder</button>
+            <button type='reset'>Cancel</button>
+          </form>
+        )}
+      </NotefulContext.Consumer>
     )
   }
 }
 
-AddFolder.propTypes ={
+AddFolder.propTypes = {
   folders: PropTypes.arrayOf(PropTypes.object),
   history: PropTypes.object,
   location: PropTypes.object,

@@ -19,14 +19,14 @@ class AddNote extends React.Component {
         value: '',
         touch: false
       },
-      time:  {
+      time: {
         value: ''
       }
     }
   }
 
   updateName(name) {
-    this.setState({ name: { value: name, touch: true} })
+    this.setState({ name: { value: name, touch: true } })
   }
 
   updateContent(content) {
@@ -34,53 +34,51 @@ class AddNote extends React.Component {
   }
 
   updateFolder(folder) {
-    this.setState({ folder: { value: folder, touch: true} })
+    this.setState({ folder: { value: folder, touch: true } })
   }
 
   handleSubmit(event, callback) {
-    
+
     event.preventDefault();
-    const time=  new Date();
-    const  {name, content, folder } = this.state;
+    const time = new Date();
+    const { name, content, folder } = this.state;
     fetch(`${config.API_ENDPOINT}notes/`, {
       method: 'POST',
-      headers: {'content-type': 'application/json'},
-      body: JSON.stringify({'name': name.value, content: content.value, folderId: folder.value, modified: time}),
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ 'name': name.value, content: content.value, folderId: folder.value, modified: time }),
     })
-    .then(res => {
-      if (!res.ok) {
-        return res.json().then(error => {
-          throw error
-        })
-      }
-      return res.json()
-    })
-    .then(data => {
-      console.log(data)
-      callback(data)
-    })
-    .catch(error => {
-      console.error(error)
-    })
+      .then(res => {
+        if (!res.ok) {
+          return res.json().then(error => {
+            throw error
+          })
+        }
+        return res.json()
+      })
+      .then(data => {
+        console.log(data)
+        callback(data)
+      })
+      .catch(error => {
+        console.error(error)
+      })
   }
 
   validateName() {
     const name = this.state.name.value.trim();
     if (name.length === 0) {
       return 'Name is required'
-    } 
+    }
   }
 
   validateFolder() {
     const folder = this.state.folder.value;
-    console.log(this.state.folder.value, 'folder value')
     if (folder === '' || folder === 'select') {
       return 'Please select a folder'
     }
   }
 
   render() {
-    console.log(this.props, "AddNote  Component")
     return (
       <NotefulContext.Consumer>
         {(context) => (
@@ -92,7 +90,7 @@ class AddNote extends React.Component {
               Name:
             </label>
             <input id='name' type='text' onChange={e => this.updateName(e.target.value)} />
-              {this.state.name.touch && <ValidationError message={this.validateName()}/>}
+            {this.state.name.touch && <ValidationError message={this.validateName()} />}
             <label htmlFor='content'>
               Content:
             </label>
@@ -110,14 +108,14 @@ class AddNote extends React.Component {
                 </option>
               ))}
             </select>
-            {this.state.folder.touch && <ValidationError message={this.validateFolder()}/>}
-            <button 
+            {this.state.folder.touch && <ValidationError message={this.validateFolder()} />}
+            <button
               type='submit'
               disabled={
                 this.validateName() ||
                 this.validateFolder()
               }
-              >Submit</button>
+            >Submit</button>
             <button type='reset'>Cancel</button>
           </form>
         )}
@@ -126,7 +124,7 @@ class AddNote extends React.Component {
   }
 }
 
-AddNote.defaultProps= {
+AddNote.defaultProps = {
   name: '',
   folder: ''
 }

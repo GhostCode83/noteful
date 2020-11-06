@@ -8,7 +8,6 @@ class FolderNotesList extends React.Component {
   static contextType = NotefulContext;
 
   render() {
-    console.log(this.props)
     const notesList = this.props.notes.filter(note => {
       if (note.folderId === Number(this.props.match.params.folderId)) {
         return note
