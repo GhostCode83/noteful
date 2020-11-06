@@ -48,7 +48,15 @@ class App extends React.Component {
     Promise.all([
       fetch(`${config.API_ENDPOINT}notes/`),
       fetch(`${config.API_ENDPOINT}folders/`)
-    ])
+    ], {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+        'mode': 'cors',
+        //'Authorization': `Bearer ${config.API_KEY}`,
+        'Access-Control-Allow-Origin': '*'
+      }
+    })
       .then(([res1, res2]) =>
         Promise.all([res1.json(), res2.json()]))
       .then(([data1, data2]) => {
