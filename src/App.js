@@ -24,6 +24,7 @@ class App extends React.Component {
     const newNotes = this.state.notes.filter(n =>
       n.id !== noteId
     )
+    console.log(newNotes)
     this.setState({
       notes: newNotes
     })
@@ -44,6 +45,7 @@ class App extends React.Component {
   addNote = (newNote) => {
     //console.log(newNote, this.state.notes)
     let note = {
+      id: newNote.id,
       name: newNote.note_name,
       folderId: newNote.folder,
       modified: newNote.date_posted
@@ -97,6 +99,7 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this.state.notes,)
     const contextValue = {
       notes: this.state.notes,
       folders: this.state.folders,
@@ -146,6 +149,7 @@ class App extends React.Component {
                     <NotesPage
                       match={match}
                       notes={this.state.notes}
+
                     />
                   )}
                 />
