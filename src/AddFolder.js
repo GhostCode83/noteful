@@ -30,7 +30,7 @@ class AddFolder extends React.Component {
         //'Authorization': `Bearer ${config.API_KEY}`,
         'Access-Control-Allow-Origin': '*'
       },
-      body: JSON.stringify({ name: folder.value }),
+      body: JSON.stringify({ title: folder.value }),
     })
       .then(res => {
         if (!res.ok) {
@@ -42,6 +42,7 @@ class AddFolder extends React.Component {
       })
       .then(data => {
         console.log(data);
+        this.props.history.push('/')
         callback(data)
       })//not doing anything with the data yet
       .catch(error => {

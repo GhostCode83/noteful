@@ -27,8 +27,8 @@ class NotesList extends React.Component {
           {notes}
         </ul>
         <Link to={`/AddNote`}>
-        <button>
-          Add Note
+          <button>
+            Add Note
         </button>
         </Link>
       </div>
@@ -38,20 +38,3 @@ class NotesList extends React.Component {
 }
 
 export default NotesList
-
-/*
-    <NotefulContext.Consumer>
-        {(context) => (
-
-
-      <div>
-        <ul>
-          {notes}
-        </ul>
-        <Link to={`/AddNote`}>
-          <button>Add Note</button>
-        </Link>
-      </div>
-        )}
-      </NotefulContext.Consumer>
-*/

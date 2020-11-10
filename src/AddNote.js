@@ -45,7 +45,7 @@ class AddNote extends React.Component {
     fetch(`${config.API_ENDPOINT}notes/`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ 'name': name.value, content: content.value, folderId: folder.value, modified: time }),
+      body: JSON.stringify({ 'note_name': name.value, content: content.value, folder: folder.value, modified: time }),
     })
       .then(res => {
         if (!res.ok) {
@@ -56,7 +56,7 @@ class AddNote extends React.Component {
         return res.json()
       })
       .then(data => {
-        console.log(data)
+        //       console.log(data)
         callback(data)
       })
       .catch(error => {

@@ -11,6 +11,7 @@ class NotesPage extends React.Component {
   static contextType = NotefulContext;
 
   handleDeleteNote(note, callback) {
+    console.log('note', note)
     fetch(`${config.API_ENDPOINT}notes/${note.id}`, {
       method: 'DELETE',
     })
@@ -32,11 +33,13 @@ class NotesPage extends React.Component {
   }
 
   render() {
+    console.log(this.props.match)
     const oneNote = (this.props.match) ? this.context.notes.find(note => {
       if (note.id === Number(this.props.match.params.notesId)) {
         return (note)
       }
     }) : ''
+    console.log(oneNote)
     //try rendering another compenent to remove the extra delete button
     return (
       <NotefulContext.Consumer>

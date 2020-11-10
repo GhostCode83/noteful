@@ -30,17 +30,27 @@ class App extends React.Component {
   }
 
   addFolder = (newFolder) => {
-    const newFolders = [...this.state.folders, newFolder]
+    console.log(newFolder, this.state.folders)
+    let folder = {
+      name: newFolder.title,
+      id: newFolder.id
+    }
+    const newFolders = [...this.state.folders, folder]
     this.setState({
       folders: newFolders
     })
   }
 
   addNote = (newNote) => {
-    const newNotes = [...this.state.notes, newNote]
+    //console.log(newNote, this.state.notes)
+    let note = {
+      name: newNote.note_name,
+      folderId: newNote.folder,
+      modified: newNote.date_posted
+    }
+    const newNotes = [...this.state.notes, note]
     this.setState({
       notes: newNotes,
-
     })
   }
 
@@ -60,7 +70,6 @@ class App extends React.Component {
       .then(([res1, res2]) =>
         Promise.all([res1.json(), res2.json()]))
       .then(([data1, data2]) => {
-        console.log(data1, data2);
         let folders = data2.map(item => {
           return {
             id: item.id,
