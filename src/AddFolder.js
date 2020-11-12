@@ -27,7 +27,6 @@ class AddFolder extends React.Component {
       headers: {
         'content-type': 'application/json',
         'mode': 'cors',
-        //'Authorization': `Bearer ${config.API_KEY}`,
         'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify({ title: folder.value }),
